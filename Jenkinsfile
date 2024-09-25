@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         PATH = "${env.PATH}:/bin:/usr/bin:/usr/local/bin"  // Append typical shell paths
-        DOCKERHUB_CREDENTIALS = credentials('123')  // DockerHub credentials ID from Jenkins
     }
 
     stages {
@@ -55,7 +54,7 @@ pipeline {
                 containers.each { containerId ->
                     sh "docker rm -f ${containerId} || true"
                 }
-                // Remove Docker image
+                
                 sh 'docker rmi mlops-app || true'
             }
         }
