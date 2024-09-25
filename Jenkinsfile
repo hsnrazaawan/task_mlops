@@ -31,7 +31,7 @@ pipeline {
                 script {
                    
                     withCredentials([usernamePassword(credentialsId: '123', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                        // Login to DockerHub and push the image
+                       
                         sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
                         sh 'docker tag mlops-app:latest $DOCKER_USERNAME/mlops-app:latest'
                         sh 'docker push $DOCKER_USERNAME/mlops-app:latest'
