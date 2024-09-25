@@ -30,12 +30,15 @@ pipeline {
         stage('Docker Login and Push') {
             steps {
                 script {
-                    // Login to DockerHub and push the image
-                    sh '/bin/sh -c "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"'
-                    sh '/bin/sh -c "docker tag mlops-app:latest ${DOCKERHUB_CREDENTIALS_USR}/mlops-app:latest"'
-                    sh '/bin/sh -c "docker push ${DOCKERHUB_CREDENTIALS_USR}/mlops-app:latest"'
-                }
-            }
+                    // Use withCredentials to manage the DockerHub credentials
+                    withCredentials([usernamePassword(credentialsId: '123', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        // Login to DockerHub and push the image
+                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                        sh 'docker tag mlops-app:latest $DOCKER_USERNAME/mlops-app:latest'
+                        sh 'docker push $DOCKER_USERNAME/mlops-app:latest'
+                    }
+                 }
+             }
         }
 
         stage('Run Docker Container') {
