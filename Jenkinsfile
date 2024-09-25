@@ -7,10 +7,10 @@ pipeline {
 
     stages {
         stage('Clone Repository') {
-            steps {
-                git branch: 'main', url: 'https://github.com/hsnrazaawan/task_mlops.git'
-            }
-        }
+     steps {
+        git branch: 'main', url: 'https://github.com/hsnrazaawan/task_mlops.git', credentialsId: 'github-credentials'
+     }
+    }
 
         stage('Install Dependencies') {
             steps {
