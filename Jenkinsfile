@@ -29,7 +29,7 @@ pipeline {
         stage('Docker Login and Push') {
             steps {
                 script {
-                    // Use withCredentials to manage the DockerHub credentials
+                   
                     withCredentials([usernamePassword(credentialsId: '123', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         // Login to DockerHub and push the image
                         sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
